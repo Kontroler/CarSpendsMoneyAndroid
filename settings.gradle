@@ -1,0 +1,4 @@
+rootProject.name = "CarSpendsMoney"
+include ':domain'
+include ':firebase'
+include ':app'

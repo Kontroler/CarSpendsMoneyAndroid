@@ -1,0 +1,56 @@
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
+
+android {
+    compileSdkVersion rootProject.ext.compileSdkVersion
+    flavorDimensions "version"
+
+    defaultConfig {
+        minSdkVersion rootProject.ext.minSdkVersion
+        targetSdkVersion rootProject.ext.targetSdkVersion
+        versionCode rootProject.ext.versionCode
+        versionName rootProject.ext.versionName
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles "consumer-rules.pro"
+        dimension "version"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    productFlavors {
+        dev {
+            dimension "version"
+        }
+        prod {
+            dimension "version"
+        }
+    }
+}
+
+dependencies {
+    def deps = rootProject.ext
+
+    implementation fileTree(dir: "libs", include: ["*.jar"])
+    implementation deps.kotlinStdLib
+    implementation deps.coreKtx
+    implementation deps.appcompat
+    implementation deps.constraintLayout
+    testImplementation deps.jUnit
+    androidTestImplementation deps.testJUnit
+
+    implementation deps.koinAndroid
+    implementation deps.koinAndroidxScope
+    implementation deps.koinAndroidxViewModel
+
+    implementation deps.timber
+
+    implementation deps.firebaseAuthKtx
+}

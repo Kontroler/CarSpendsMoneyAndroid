@@ -1,0 +1,89 @@
+apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
+
+android {
+    compileSdkVersion rootProject.ext.compileSdkVersion
+    flavorDimensions "version"
+
+    defaultConfig {
+        applicationId "pl.kontroler.carspendsmoney"
+        minSdkVersion rootProject.ext.minSdkVersion
+        targetSdkVersion rootProject.ext.targetSdkVersion
+        versionCode rootProject.ext.versionCode
+        versionName rootProject.ext.versionName
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    buildFeatures {
+        buildConfig = true
+        dataBinding = true
+    }
+
+    compileOptions {
+        sourceCompatibility = 1.8
+        targetCompatibility = 1.8
+    }
+
+    kotlinOptions {
+        jvmTarget = JavaVersion.VERSION_1_8.toString()
+    }
+
+    productFlavors {
+        dev {
+            dimension "version"
+        }
+        prod {
+            dimension "version"
+        }
+    }
+}
+
+dependencies {
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+    implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0'
+    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0'
+    def deps = rootProject.ext
+
+    implementation project(":domain")
+
+    implementation fileTree(dir: "libs", include: ["*.jar"])
+    implementation deps.kotlinStdLib
+    implementation deps.coreKtx
+    implementation deps.appcompat
+    implementation deps.constraintLayout
+    testImplementation deps.jUnit
+    androidTestImplementation deps.testJUnit
+    androidTestImplementation deps.espressoCore
+
+    implementation deps.navigationFragment
+    implementation deps.navigationUi
+    implementation deps.navigationFragmentKtx
+    implementation deps.navigationUiKtx
+    implementation deps.navigationDynamicFeaturesFragment
+    androidTestImplementation deps.navigationTesting
+
+    implementation deps.materialDesing
+
+    implementation deps.koinAndroid
+    implementation deps.koinAndroidxScope
+    implementation deps.koinAndroidxViewModel
+
+    implementation deps.timber
+
+    implementation deps.fastAdapter
+    implementation deps.fastAdapterExtensionsBinding
+    implementation deps.fastAdapterExtensionsExpandable
+    implementation deps.fastAdapterExtensionsDiff
+    implementation deps.fastAdapterExtensionsUi
+    implementation deps.itemAnimators
+}
