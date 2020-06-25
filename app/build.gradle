@@ -86,4 +86,6 @@ dependencies {
     implementation deps.fastAdapterExtensionsDiff
     implementation deps.fastAdapterExtensionsUi
     implementation deps.itemAnimators
+
+    implementation deps.firebaseAuthKtx
 }

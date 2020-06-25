@@ -2,6 +2,7 @@ apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
+apply plugin: 'com.google.gms.google-services'
 
 android {
     compileSdkVersion rootProject.ext.compileSdkVersion
@@ -53,4 +54,7 @@ dependencies {
     implementation deps.timber
 
     implementation deps.firebaseAuthKtx
+    implementation deps.firebaseAnalytics
+    implementation deps.firebaseDatabaseKtx
+    implementation deps.kotlinxCoroutinesPlayServices
 }

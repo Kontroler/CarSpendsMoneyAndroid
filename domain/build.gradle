@@ -53,4 +53,15 @@ dependencies {
     implementation deps.koinAndroidxViewModel
 
     implementation deps.timber
+
+    //    Mapstruct
+    implementation deps.mapstruct
+    kapt deps.mapstructProcessor
+    kaptTest deps.mapstructProcessor
+
+//    Mapstruct-kotlin
+    api deps.mapstructKotlin
+    kapt deps.mapstructKotlinProcessor
+
+    implementation deps.firebaseAuthKtx
 }

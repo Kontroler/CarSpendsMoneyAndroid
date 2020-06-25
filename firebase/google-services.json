@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "516031337272",
+    "firebase_url": "https://carspendsmoney.firebaseio.com",
+    "project_id": "carspendsmoney",
+    "storage_bucket": "carspendsmoney.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:516031337272:android:fd6fcc2256e1b47ae4a7cd",
+        "android_client_info": {
+          "package_name": "pl.kontroler.firebase"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "516031337272-48a4jnmik4o5l0ola57p3l1lb6j1o7bv.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA8vpMofaoYweViSmNNWx8yTQmgthlAMxc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "516031337272-48a4jnmik4o5l0ola57p3l1lb6j1o7bv.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

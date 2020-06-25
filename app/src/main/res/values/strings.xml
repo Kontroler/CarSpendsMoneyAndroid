@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">CarSpendsMoney</string>
+
+    <!-- NAMING <WHERE>_<DESCRIPTION>  -->
+
+    <string name="register_userCreatedError">Error creating new user</string>
+    <string name="register_userCollisionError">The email address is already in use</string>
+    <string name="register_weakPasswordError">Weak password</string>
 </resources>
