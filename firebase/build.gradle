@@ -26,6 +26,15 @@ android {
         }
     }
 
+    compileOptions {
+        sourceCompatibility = 1.8
+        targetCompatibility = 1.8
+    }
+
+    kotlinOptions {
+        jvmTarget = JavaVersion.VERSION_1_8.toString()
+    }
+
     productFlavors {
         dev {
             dimension "version"
@@ -56,5 +65,14 @@ dependencies {
     implementation deps.firebaseAuthKtx
     implementation deps.firebaseAnalytics
     implementation deps.firebaseDatabaseKtx
+    implementation deps.firebaseFirestoreKtx
     implementation deps.kotlinxCoroutinesPlayServices
+
+    implementation deps.rxJava
+    implementation deps.rxJavaRxAndroid
+    implementation deps.rxJavaRxKotlin
+
+    //    Mapstruct-kotlin
+    api deps.mapstructKotlin
+    kapt deps.mapstructKotlinProcessor
 }

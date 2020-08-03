@@ -37,4 +37,30 @@
 
     </fragment>
 
+    <fragment
+        android:id="@+id/refuels_fragment"
+        android:name="pl.kontroler.carspendsmoney.ui.refuels.RefuelsFragment"
+        android:label="Refuels"
+        tools:layout="@layout/fragment_refuels">
+
+        <action
+            android:id="@+id/action_refuelsFragment_to_newRefuelFragment"
+            app:destination="@id/new_refuel_fragment" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/new_refuel_fragment"
+        android:name="pl.kontroler.carspendsmoney.ui.newRefuel.NewRefuelFragment"
+        android:label="New refuel"
+        tools:layout="@layout/fragment_new_refuel">
+
+        <action
+            android:id="@+id/action_newRefuelFragment_to_refuelsFragment"
+            app:destination="@id/refuels_fragment"
+            app:popUpTo="@id/new_refuel_fragment"
+            app:popUpToInclusive="true" />
+
+    </fragment>
+
 </navigation>

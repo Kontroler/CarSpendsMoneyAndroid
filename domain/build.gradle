@@ -25,6 +25,15 @@ android {
         }
     }
 
+    compileOptions {
+        sourceCompatibility = 1.8
+        targetCompatibility = 1.8
+    }
+
+    kotlinOptions {
+        jvmTarget = JavaVersion.VERSION_1_8.toString()
+    }
+
     productFlavors {
         dev {
             dimension "version"
@@ -46,6 +55,7 @@ dependencies {
     implementation deps.appcompat
     implementation deps.constraintLayout
     testImplementation deps.jUnit
+    testImplementation deps.mockitoCore
     androidTestImplementation deps.testJUnit
 
     implementation deps.koinAndroid
@@ -64,4 +74,15 @@ dependencies {
     kapt deps.mapstructKotlinProcessor
 
     implementation deps.firebaseAuthKtx
+    implementation deps.firebaseFirestoreKtx
+    
+    implementation deps.threetenabp
+    testImplementation deps.threetenabpTest
+
+    implementation deps.kotlinxCoroutinesPlayServices
+    implementation deps.livedata
+
+    implementation deps.rxJava
+    implementation deps.rxJavaRxAndroid
+    implementation deps.rxJavaRxKotlin
 }

@@ -1,8 +1,7 @@
 package pl.kontroler.domain.manager
 
-import pl.kontroler.domain.mapper.ExpenseMapper
-import pl.kontroler.domain.model.Expense
-import pl.kontroler.firebase.manager.AuthenticationFirebaseManager
+import pl.kontroler.domain.mapper.FuelExpenseMapper
+import pl.kontroler.domain.model.FuelExpense
 import pl.kontroler.firebase.manager.RealtimeDatabaseFirebaseManager
 
 
@@ -12,12 +11,11 @@ import pl.kontroler.firebase.manager.RealtimeDatabaseFirebaseManager
 
 class RealtimeDatabaseDomainManager(
     private val database: RealtimeDatabaseFirebaseManager,
-    private val expenseMapper: ExpenseMapper,
-    private val auth: AuthenticationFirebaseManager
+    private val fuelExpenseMapper: FuelExpenseMapper
 ) {
 
-    fun writeExpense(expense: Expense) {
-        val expenseFirebase = expenseMapper.mapToFirebase(expense).apply { uid = auth.currentUser.uid }
+    fun writeExpense(fuelExpense: FuelExpense) {
+        val expenseFirebase = fuelExpenseMapper.mapToFirebase(fuelExpense)
         database.writeExpense(expenseFirebase)
     }
 

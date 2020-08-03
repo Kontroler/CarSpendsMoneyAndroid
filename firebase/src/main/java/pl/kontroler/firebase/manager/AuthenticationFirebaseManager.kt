@@ -20,7 +20,7 @@ class AuthenticationFirebaseManager(
 ) {
 
     val authState: LiveData<FirebaseUser> = FirebaseUserLiveData(auth)
-    val currentUser = auth.currentUser ?: throw Error("You cannot get user if you not logged.")
+    val currentUser = auth.currentUser
 
     fun isUserLogged(): Boolean {
         return auth.currentUser != null

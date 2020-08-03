@@ -9,10 +9,10 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import org.koin.androidx.viewmodel.ext.android.getViewModel
-import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import pl.kontroler.carspendsmoney.R
 import pl.kontroler.carspendsmoney.databinding.FragmentHomeBinding
+import pl.kontroler.carspendsmoney.ui.MainActivity
 import pl.kontroler.carspendsmoney.ui.login.LoginViewModel
 
 class HomeFragment : Fragment() {
@@ -44,7 +44,11 @@ class HomeFragment : Fragment() {
             }
         })
 
-        vm.write()
+        showBottomNavigationView()
+    }
+
+    private fun showBottomNavigationView() {
+        (requireActivity() as MainActivity).showBottomNavigationView()
     }
 
 }

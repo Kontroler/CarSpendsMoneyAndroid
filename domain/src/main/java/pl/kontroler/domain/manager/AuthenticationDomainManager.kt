@@ -1,6 +1,5 @@
 package pl.kontroler.domain.manager
 
-import com.google.firebase.auth.AuthResult
 import pl.kontroler.domain.mapper.UserMapper
 import pl.kontroler.domain.model.User
 import pl.kontroler.firebase.manager.AuthenticationFirebaseManager
@@ -20,8 +19,12 @@ class AuthenticationDomainManager(
         return authenticationFirebaseManager.isUserLogged()
     }
 
-    fun getUser(): User {
-        return userMapper.mapToModel(authenticationFirebaseManager.currentUser)
+    fun getUser(): User? {
+        return if (isUserLogged()) {
+            userMapper.mapToModel(authenticationFirebaseManager.currentUser!!)
+        } else {
+            null
+        }
     }
 
     suspend fun createAccount(email: String, password: String, displayName: String): User {

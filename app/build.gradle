@@ -55,6 +55,7 @@ dependencies {
     def deps = rootProject.ext
 
     implementation project(":domain")
+    implementation project(":firebase")
 
     implementation fileTree(dir: "libs", include: ["*.jar"])
     implementation deps.kotlinStdLib
@@ -88,4 +89,13 @@ dependencies {
     implementation deps.itemAnimators
 
     implementation deps.firebaseAuthKtx
+
+    implementation deps.threetenabp
+
+    implementation deps.kotlinxCoroutinesPlayServices
+    implementation deps.livedata
+
+    implementation deps.rxJava
+    implementation deps.rxJavaRxAndroid
+    implementation deps.rxJavaRxKotlin
 }

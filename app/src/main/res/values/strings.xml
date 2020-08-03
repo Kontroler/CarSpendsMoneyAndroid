@@ -6,4 +6,31 @@
     <string name="register_userCreatedError">Error creating new user</string>
     <string name="register_userCollisionError">The email address is already in use</string>
     <string name="register_weakPasswordError">Weak password</string>
+    <string name="register_hintEmail">Email</string>
+    <string name="register_hintDisplayName">Display name</string>
+    <string name="register_hintPassword">Password</string>
+    <string name="register_hintConfirmPassword">ConfirmPassword</string>
+    <string name="register_register">Register</string>
+
+    <string name="login_hintEmail">Email</string>
+    <string name="login_hintPassword">Password</string>
+    <string name="login_signIn">Sign In</string>
+    <string name="login_register">Register</string>
+
+    <string name="newRefuel_date">Date</string>
+    <string name="newRefuel_hintQuantity">Quantity</string>
+    <string name="newRefuel_hintUnitPrice">Unit price</string>
+    <string name="newRefuel_hintCounter">Counter</string>
+    <string name="newRefuel_hintDescription">Description (optional)</string>
+    <string name="newRefuel_cancel">Cancel</string>
+    <string name="newRefuel_save">Save</string>
+
+    <string name="refuelFastAdapterItem_fuelTypeExample">E5</string>
+    <string name="refuelFastAdapterItem_dateExample">2010–01–01</string>
+    <string name="refuelFastAdapterItem_totalPriceExample">120.32 PLN</string>
+    <string name="refuelFastAdapterItem_quantityExample">10 l</string>
+    <string name="refuelFastAdapterItem_unitPriceExample">3.99 PLN/l</string>
+    <string name="refuelFastAdapterItem_kmSinceLastRefuelingExample">150000 (+300) km</string>
+    <string name="refuelFastAdapterItem_descriptionExample">Description</string>
+
 </resources>

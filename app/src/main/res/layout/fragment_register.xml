@@ -31,7 +31,7 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Email"
+                android:hint="@string/register_hintEmail"
                 android:inputType="textEmailAddress"
                 android:singleLine="true" />
         </com.google.android.material.textfield.TextInputLayout>
@@ -49,7 +49,7 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Display name"
+                android:hint="@string/register_hintDisplayName"
                 android:singleLine="true" />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -67,7 +67,7 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Password"
+                android:hint="@string/register_hintPassword"
                 android:inputType="textPassword"
                 android:singleLine="true"
                 android:text="@={viewmodel._password}" />
@@ -88,7 +88,7 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Confirm password"
+                android:hint="@string/register_hintConfirmPassword"
                 android:inputType="textPassword"
                 android:singleLine="true" />
         </com.google.android.material.textfield.TextInputLayout>
@@ -99,7 +99,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:onClick="@{() -> viewmodel.register(email.getEditText().getText().toString(), password.getEditText().getText().toString(), displayName.getEditText().getText().toString())}"
-            android:text="Register"
+            android:text="@string/register_register"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

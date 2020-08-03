@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="viewmodel"
+            type="pl.kontroler.carspendsmoney.fastAdapterItem.RefuelFastAdapterItem" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/fastAdapterItem_refuel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="4dp"
+        android:background="@color/lightGray"
+        android:padding="8dp">
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/fuelType"
+            android:layout_width="50dp"
+            android:layout_height="0dp"
+            android:gravity="center"
+            android:text="@string/refuelFastAdapterItem_fuelTypeExample"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/date"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/refuelFastAdapterItem_dateExample"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toStartOf="@id/totalPrice"
+            app:layout_constraintStart_toEndOf="@id/fuelType"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/totalPrice"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:gravity="end"
+            android:text="@string/refuelFastAdapterItem_totalPriceExample"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintBaseline_toBaselineOf="@id/date"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/date" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/quantity"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/refuelFastAdapterItem_quantityExample"
+            app:layout_constraintEnd_toStartOf="@id/unitPrice"
+            app:layout_constraintStart_toEndOf="@id/fuelType"
+            app:layout_constraintTop_toBottomOf="@id/date" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/unitPrice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:text="@string/refuelFastAdapterItem_unitPriceExample"
+            app:layout_constraintBaseline_toBaselineOf="@id/quantity"
+            app:layout_constraintStart_toEndOf="@id/quantity" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/kmSinceLastRefueling"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/refuelFastAdapterItem_kmSinceLastRefuelingExample"
+            app:layout_constraintBaseline_toBaselineOf="@id/unitPrice"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/description"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/refuelFastAdapterItem_descriptionExample"
+            app:layout_constraintStart_toEndOf="@id/fuelType"
+            app:layout_constraintTop_toBottomOf="@id/quantity" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

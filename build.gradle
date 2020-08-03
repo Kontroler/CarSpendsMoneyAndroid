@@ -24,12 +24,9 @@ allprojects {
     repositories {
         google()
         jcenter()
-        maven {
-            url "https://dl.bintray.com/mikepenz/maven"
-        }
-        maven {
-            url 'https://jitpack.io'
-        }
+        maven { url "https://oss.jfrog.org/libs-snapshot" }
+        maven { url "https://dl.bintray.com/mikepenz/maven" }
+        maven { url 'https://jitpack.io' }
     }
 }
 
