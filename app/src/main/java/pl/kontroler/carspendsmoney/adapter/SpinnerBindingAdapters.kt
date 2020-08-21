@@ -8,7 +8,7 @@ import androidx.databinding.InverseBindingAdapter
 import androidx.databinding.InverseBindingListener
 import pl.kontroler.domain.model.Currency
 import pl.kontroler.domain.model.FuelType
-import pl.kontroler.firebase.util.Resource2
+import pl.kontroler.firebase.util.Resource
 
 object SpinnerBindingAdapters {
 
@@ -20,12 +20,12 @@ object SpinnerBindingAdapters {
     @JvmStatic
     fun setItems(
         spinner: AppCompatSpinner,
-        items: Resource2<List<FuelType>>?,
+        items: Resource<List<FuelType>>?,
         selectedItem: FuelType?,
         listener: InverseBindingListener
     ) {
         if (items == null) return
-        if (items !is Resource2.Success) return
+        if (items !is Resource.Success) return
 
         if (spinner.selectedItem != null &&
             selectedItem != null &&
@@ -51,12 +51,12 @@ object SpinnerBindingAdapters {
     @JvmStatic
     fun setItems(
         spinner: AppCompatSpinner,
-        items: Resource2<List<Currency>>?,
+        items: Resource<List<Currency>>?,
         selectedItem: Currency?,
         listener: InverseBindingListener
     ) {
         if (items == null) return
-        if (items !is Resource2.Success) return
+        if (items !is Resource.Success) return
 
         if (spinner.selectedItem != null &&
             selectedItem != null &&

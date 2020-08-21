@@ -1,19 +1,17 @@
 package pl.kontroler.carspendsmoney.ui.newRefuel
 
 import androidx.lifecycle.*
-import kotlinx.coroutines.CoroutineExceptionHandler
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
+import pl.kontroler.carspendsmoney.R
 import pl.kontroler.carspendsmoney.utils.SingleLiveEvent
+import pl.kontroler.domain.manager.CarDomainManager
 import pl.kontroler.domain.manager.CurrencyDomainManager
 import pl.kontroler.domain.manager.FuelExpenseDomainManager
 import pl.kontroler.domain.manager.FuelTypeDomainManager
-import pl.kontroler.domain.model.Currency
-import pl.kontroler.domain.model.DateValue
-import pl.kontroler.domain.model.FuelExpense
-import pl.kontroler.domain.model.FuelType
-import pl.kontroler.firebase.util.Resource2
+import pl.kontroler.domain.model.*
+import pl.kontroler.firebase.NextFuelExpenseCounterIsLowerException
+import pl.kontroler.firebase.PreviousFuelExpenseCounterIsGreaterException
+import pl.kontroler.firebase.util.Resource
 import timber.log.Timber
 import java.math.BigDecimal
 
@@ -21,12 +19,9 @@ import java.math.BigDecimal
 class NewRefuelViewModel(
     private val fuelExpenseDomainManger: FuelExpenseDomainManager,
     private val currencyDomainManager: CurrencyDomainManager,
-    private val fuelTypeDomainManager: FuelTypeDomainManager
+    private val fuelTypeDomainManager: FuelTypeDomainManager,
+    private val carDomainManager: CarDomainManager
 ) : ViewModel() {
-
-    private val coroutineExceptionHandler = CoroutineExceptionHandler { _, throwable ->
-        Timber.e(throwable.stackTrace.toString())
-    }
 
     val date = MutableLiveData<DateValue>().apply { value = DateValue.now() }
     val description = MutableLiveData<String>().apply { value = "" }
@@ -37,59 +32,92 @@ class NewRefuelViewModel(
     private val _saveSuccess = SingleLiveEvent<Unit>()
     val saveSuccess: LiveData<Unit> = _saveSuccess
 
+    private var _messageResource = SingleLiveEvent<MessageResource>()
+    val messageResource: LiveData<MessageResource> = _messageResource
+
     val currenciesList = liveData {
-        emit(Resource2.Loading())
+        emit(Resource.Loading())
 
         try {
-            val currencies = currencyDomainManager.readAll()
+            val currencies = currencyDomainManager.all()
             emit(currencies)
         } catch (e: Exception) {
             Timber.e(e)
-            emit(Resource2.Failure(e))
+            _messageResource.value = MessageResource(
+                MessageResource.Type.Error,
+                R.string.newRefuel_loadingCurrenciesError
+            )
+            emit(Resource.Failure(e))
         }
     }
     val selectedCurrency = MutableLiveData<Currency>()
 
     val fuelTypesList = liveData(Dispatchers.IO) {
-        emit(Resource2.Loading())
+        emit(Resource.Loading())
 
         try {
-            val fuelTypes = fuelTypeDomainManager.readAll()
+            val fuelTypes = fuelTypeDomainManager.all()
             emit(fuelTypes)
         } catch (e: Exception) {
             Timber.e(e)
-            emit(Resource2.Failure(e))
+            _messageResource.value = MessageResource(
+                MessageResource.Type.Error,
+                R.string.newRefuel_loadingFuelTypesError
+            )
+            emit(Resource.Failure(e))
         }
     }
     val selectedFuelType = MutableLiveData<FuelType>()
 
     fun write() {
-        checkNotNull(date.value) { "Date is null" }
-        checkNotNull(description.value) { "Description is null" }
-        checkNotNull(quantity.value) { "Quantity is null" }
-        checkNotNull(unitPrice.value) { "Unit price is null" }
-        checkNotNull(selectedCurrency.value) { "Selected currency is null" }
-        checkNotNull(counter.value) { "Counter is null" }
-        checkNotNull(selectedFuelType.value) { "Selected fuel type is null" }
+        viewModelScope.launch {
+            try {
+                val fuelExpense = getFuelExpense()
+                val car = carDomainManager.currentCar()
 
-        viewModelScope.launch(coroutineExceptionHandler) {
-            val fuelExpense = FuelExpense.create(
-                date = date.value!!,
-                description = description.value!!,
-                quantity = quantity.value!!.toBigDecimal(),
-                unit = "L",
-                unitPrice = unitPrice.value!!.toBigDecimal(),
-                currency = selectedCurrency.value!!.code,
-                totalPrice = calcTotalPrice(
-                    quantity.value!!.toBigDecimal(),
-                    unitPrice.value!!.toBigDecimal()
-                ),
-                counter = counter.value!!.toInt(),
-                fuelType = selectedFuelType.value!!
-            )
-            fuelExpenseDomainManger.write(fuelExpense)
-            _saveSuccess.call()
+                fuelExpenseDomainManger.write(fuelExpense, car!!)
+                _messageResource.value = MessageResource(
+                    MessageResource.Type.Success,
+                    R.string.newRefuel_saveSuccessful
+                )
+                _saveSuccess.call()
+            } catch (e: PreviousFuelExpenseCounterIsGreaterException) {
+                Timber.e(e)
+                _messageResource.value = MessageResource(
+                    MessageResource.Type.Error,
+                    R.string.newRefuel_savingErrorCounterValueTooLow
+                )
+            } catch (e: NextFuelExpenseCounterIsLowerException) {
+                Timber.e(e)
+                _messageResource.value = MessageResource(
+                    MessageResource.Type.Error,
+                    R.string.newRefuel_savingErrorCounterValueTooHigh
+                )
+            } catch (e: Exception) {
+                Timber.e(e)
+                _messageResource.value = MessageResource(
+                    MessageResource.Type.Error,
+                    R.string.newRefuel_savingError
+                )
+            }
         }
+    }
+
+    private fun getFuelExpense(): FuelExpense {
+        return FuelExpense.create(
+            date = date.value!!,
+            description = description.value!!,
+            quantity = quantity.value!!.toBigDecimal(),
+            unit = "L",
+            unitPrice = unitPrice.value!!.toBigDecimal(),
+            currency = selectedCurrency.value!!.code,
+            totalPrice = calcTotalPrice(
+                quantity.value!!.toBigDecimal(),
+                unitPrice.value!!.toBigDecimal()
+            ),
+            counter = counter.value!!.toInt(),
+            fuelType = selectedFuelType.value!!
+        )
     }
 
     private fun calcTotalPrice(quantity: BigDecimal, unitPrice: BigDecimal): BigDecimal {

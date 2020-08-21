@@ -11,6 +11,14 @@ import com.github.pozo.KotlinBuilder
 data class Car(
     val uid: String,
     val name: String,
-    val counter: String,
+    val counter: Int,
     val isCurrent: Boolean
-)
+) {
+    companion object {
+        fun create(
+            name: String,
+            counter: Int,
+            isCurrent: Boolean
+        ): Car = Car("", name, counter, isCurrent)
+    }
+}

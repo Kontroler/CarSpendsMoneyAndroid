@@ -11,6 +11,7 @@
     <string name="register_hintPassword">Password</string>
     <string name="register_hintConfirmPassword">ConfirmPassword</string>
     <string name="register_register">Register</string>
+    <string name="register_registerSuccessful">Register successful</string>
 
     <string name="login_hintEmail">Email</string>
     <string name="login_hintPassword">Password</string>
@@ -24,7 +25,13 @@
     <string name="newRefuel_hintDescription">Description (optional)</string>
     <string name="newRefuel_cancel">Cancel</string>
     <string name="newRefuel_save">Save</string>
-
+    <string name="newRefuel_loadingCurrenciesError">Loading currencies error</string>
+    <string name="newRefuel_loadingFuelTypesError">Loading fuel types error</string>
+    <string name="newRefuel_savingError">Saving error</string>
+    <string name="newRefuel_savingErrorCounterValueTooLow">Counter value is too low</string>
+    <string name="newRefuel_savingErrorCounterValueTooHigh">Counter value is too high</string>
+    <string name="newRefuel_saveSuccessful">Save successful</string>
+    
     <string name="refuelFastAdapterItem_fuelTypeExample">E5</string>
     <string name="refuelFastAdapterItem_dateExample">2010–01–01</string>
     <string name="refuelFastAdapterItem_totalPriceExample">120.32 PLN</string>

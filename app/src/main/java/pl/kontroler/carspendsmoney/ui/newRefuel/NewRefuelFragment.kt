@@ -13,6 +13,7 @@ import org.koin.androidx.viewmodel.ext.android.getViewModel
 import pl.kontroler.carspendsmoney.R
 import pl.kontroler.carspendsmoney.databinding.FragmentNewRefuelBinding
 import pl.kontroler.carspendsmoney.ui.MainActivity
+import pl.kontroler.carspendsmoney.utils.showToast
 
 @ExperimentalCoroutinesApi
 class NewRefuelFragment : Fragment() {
@@ -69,10 +70,19 @@ class NewRefuelFragment : Fragment() {
 
     private fun observe() {
         observeSaveSuccess()
+        observeMessageResource()
     }
 
     private fun observeSaveSuccess() {
-        vm.saveSuccess.observe(viewLifecycleOwner, Observer { popBakStack() })
+        vm.saveSuccess.observe(viewLifecycleOwner, Observer {
+            popBakStack()
+        })
+    }
+
+    private fun observeMessageResource() {
+        vm.messageResource.observe(viewLifecycleOwner, Observer { messageResource ->
+            messageResource.showToast(requireContext())
+        })
     }
 
 }

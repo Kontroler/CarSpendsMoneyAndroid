@@ -8,7 +8,7 @@ import com.mikepenz.fastadapter.adapters.ItemAdapter
 import com.mikepenz.itemanimators.SlideDownAlphaAnimator
 import pl.kontroler.carspendsmoney.fastAdapterItem.RefuelFastAdapterItem
 import pl.kontroler.domain.model.FuelExpense
-import pl.kontroler.firebase.util.Resource2
+import pl.kontroler.firebase.util.Resource
 
 
 /**
@@ -24,10 +24,10 @@ object RefuelBindingAdapter {
     @JvmStatic
     fun setItems(
         recyclerView: RecyclerView,
-        items: Resource2<List<FuelExpense>>?
+        items: Resource<List<FuelExpense>>?
     ) {
         if (items == null) return
-        if (items !is Resource2.Success) return
+        if (items !is Resource.Success) return
 
         val itemAdapter = ItemAdapter<RefuelFastAdapterItem>()
         val fastAdapter = FastAdapter.with(itemAdapter)
@@ -50,7 +50,7 @@ object RefuelBindingAdapter {
 
     private fun createNewItems(items: List<FuelExpense>): List<RefuelFastAdapterItem> {
         val returnedItems = mutableListOf<RefuelFastAdapterItem>()
-        items.asReversed().forEachIndexed { index, fuelExpense ->
+        items.forEachIndexed { index, fuelExpense ->
             if (index > 0) {
                 returnedItems.add(
                     RefuelFastAdapterItem()

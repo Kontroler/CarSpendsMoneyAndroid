@@ -5,6 +5,7 @@ import android.app.Dialog
 import android.os.Bundle
 import android.widget.DatePicker
 import androidx.fragment.app.DialogFragment
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import org.koin.androidx.viewmodel.ext.android.getViewModel
 import pl.kontroler.domain.model.DateValue
 
@@ -13,6 +14,7 @@ import pl.kontroler.domain.model.DateValue
  * @author Rafał Nowowieski
  */
 
+@ExperimentalCoroutinesApi
 class DatePickerFragment : DialogFragment(), DatePickerDialog.OnDateSetListener {
 
     private val vm by lazy<NewRefuelViewModel> { requireActivity().getViewModel() }

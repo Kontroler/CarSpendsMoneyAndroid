@@ -14,7 +14,7 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 import pl.kontroler.carspendsmoney.R
 import pl.kontroler.carspendsmoney.databinding.FragmentRefuelsBinding
 import pl.kontroler.carspendsmoney.ui.MainActivity
-import pl.kontroler.firebase.util.Resource2
+import pl.kontroler.firebase.util.Resource
 
 @ExperimentalCoroutinesApi
 class RefuelsFragment : Fragment() {
@@ -66,8 +66,8 @@ class RefuelsFragment : Fragment() {
     private fun observeAllFuelExpenseList() {
         vm.fuelExpenses.observe(viewLifecycleOwner, Observer {
             when (it) {
-                is Resource2.Loading -> binding.progressBar.visibility = View.VISIBLE
-                is Resource2.Failure -> {
+                is Resource.Loading -> binding.progressBar.visibility = View.VISIBLE
+                is Resource.Failure -> {
                     binding.progressBar.visibility = View.GONE
                     Toast.makeText(requireContext(), "Error loading data", Toast.LENGTH_SHORT)
                         .show()

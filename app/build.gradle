@@ -98,4 +98,6 @@ dependencies {
     implementation deps.rxJava
     implementation deps.rxJavaRxAndroid
     implementation deps.rxJavaRxKotlin
+
+    implementation deps.toasty
 }

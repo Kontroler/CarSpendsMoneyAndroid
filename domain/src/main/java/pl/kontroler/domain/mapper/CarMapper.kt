@@ -14,6 +14,9 @@ import pl.kontroler.firebase.model.CarFirebase
 @Mapper
 interface CarMapper {
 
+    @Mappings(
+        Mapping(target = "isCurrent", source = "current")
+    )
     fun mapToFirebase(car: Car): CarFirebase
 
     @Mappings(

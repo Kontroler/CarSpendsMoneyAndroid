@@ -7,11 +7,12 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.tasks.await
+import pl.kontroler.firebase.NextFuelExpenseCounterIsLowerException
+import pl.kontroler.firebase.PreviousFuelExpenseCounterIsGreaterException
 import pl.kontroler.firebase.model.FuelExpenseFirebase
 import pl.kontroler.firebase.util.IdValuePair
-import pl.kontroler.firebase.util.Resource2
+import pl.kontroler.firebase.util.Resource
 import timber.log.Timber
 
 
@@ -22,62 +23,73 @@ import timber.log.Timber
 @ExperimentalCoroutinesApi
 class FuelExpenseFirebaseManager(
     private val firestore: FirebaseFirestore,
-    private val auth: FirebaseAuth,
-    private val carFirebaseManager: CarFirebaseManager
+    private val auth: FirebaseAuth
 ) {
 
-    suspend fun write(fuelExpense: FuelExpenseFirebase) {
-        carFirebaseManager.getCurrentCar().collect {
-            firestore
-                .collection("users")
-                .document(auth.currentUser!!.uid)
-                .collection("car")
-                .document((it as Resource2.Success).data!!.id)
-                .collection("fuelExpense")
-                .add(fuelExpense)
-                .addOnSuccessListener {
-                    Timber.d("DocumentSnapshot successfully written!")
-                }
-                .addOnFailureListener { e ->
-                    Timber.w("Error writing document: $e")
-
-                }
-                .await()
-        }
-    }
-
-    /**
-     *
-     *  @return list of uid: String and fuelExpenseFirebase: FuelExpenseFirebase
-     */
-    suspend fun readAll(): Resource2<List<IdValuePair<FuelExpenseFirebase>>> {
-        val returnedList = firestore
+    suspend fun write(fuelExpense: FuelExpenseFirebase, carUid: String) {
+        val checkFuelExpenses = firestore
             .collection("users")
             .document(auth.currentUser!!.uid)
             .collection("car")
-            .document("expense")
+            .document(carUid)
             .collection("fuelExpense")
-            .orderBy("date", Query.Direction.DESCENDING)
+            .orderBy("date")
+            .orderBy("counter")
             .get()
             .await()
-            .map { document ->
-                val id = document.id
-                val fuelExpenseFirebase =
-                    document.toObject(FuelExpenseFirebase::class.java)
-                IdValuePair(id, fuelExpenseFirebase)
-            }
 
-        return Resource2.Success(returnedList)
+        val previousFuelExpense = checkFuelExpenses?.documents?.findLast { document ->
+            val date = document.getTimestamp("date")
+            date!! < fuelExpense.date!!
+        }
+        val previousCounter = previousFuelExpense?.getLong("counter")
+        val previousDate = previousFuelExpense?.getTimestamp("date")?.toDate()
+        if (previousFuelExpense != null && previousCounter!! > fuelExpense.counter!!) {
+            throw PreviousFuelExpenseCounterIsGreaterException(
+                "Previous counter: $previousCounter - $previousDate, " +
+                        "New counter: ${fuelExpense.counter} - ${fuelExpense.date?.toDate()}"
+            )
+        }
+
+        val nextFuelExpense = checkFuelExpenses?.documents?.firstOrNull() { document ->
+            val date = document.getTimestamp("date")
+            date!! > fuelExpense.date!!
+        }
+        val nextCounter = nextFuelExpense?.getLong("counter")
+        val nextDate = nextFuelExpense?.getTimestamp("date")?.toDate()
+        if (nextFuelExpense != null && nextCounter!! < fuelExpense.counter!!) {
+            throw NextFuelExpenseCounterIsLowerException(
+                "Next counter: $nextCounter - $nextDate, " +
+                        "New counter: ${fuelExpense.counter} - ${fuelExpense.date?.toDate()}"
+            )
+        }
+
+        firestore
+            .collection("users")
+            .document(auth.currentUser!!.uid)
+            .collection("car")
+            .document(carUid)
+            .collection("fuelExpense")
+            .add(fuelExpense)
+            .addOnSuccessListener {
+                Timber.d("DocumentSnapshot successfully written!")
+            }
+            .addOnFailureListener { e ->
+                Timber.w("Error writing document: $e")
+            }
+            .await()
     }
 
-    suspend fun readAllCoroutines(): Flow<Resource2<List<IdValuePair<FuelExpenseFirebase>>>> {
+    suspend fun allFlow(carUid: String, queryDirection: Query.Direction): Flow<Resource<List<IdValuePair<FuelExpenseFirebase>>>> {
         return callbackFlow {
             val document = firestore
                 .collection("users")
                 .document(auth.currentUser!!.uid)
                 .collection("car")
-                .document("expense")
+                .document(carUid)
                 .collection("fuelExpense")
+                .orderBy("date", queryDirection)
+                .orderBy("counter", queryDirection)
 
             val subscription = document.addSnapshotListener { value, error ->
                 val returnedList = mutableListOf<IdValuePair<FuelExpenseFirebase>>()
@@ -85,14 +97,15 @@ class FuelExpenseFirebaseManager(
                     value?.forEach {
                         if (it.exists()) {
                             val id = it.id
-                            val fuelExpenseFirebase = it.toObject(FuelExpenseFirebase::class.java)
+                            val fuelExpenseFirebase =
+                                it.toObject(FuelExpenseFirebase::class.java)
                             val fuelExpense = IdValuePair(id, fuelExpenseFirebase)
                             returnedList.add(fuelExpense)
                         }
                     }
-                    offer(Resource2.Success(returnedList))
+                    offer(Resource.Success(returnedList))
                 } catch (e: Exception) {
-                    offer(Resource2.Failure(e))
+                    offer(Resource.Failure(e))
                 }
             }
             awaitClose { subscription.remove() }

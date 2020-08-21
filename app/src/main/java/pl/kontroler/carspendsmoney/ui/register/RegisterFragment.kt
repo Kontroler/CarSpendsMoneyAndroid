@@ -1,17 +1,17 @@
 package pl.kontroler.carspendsmoney.ui.register
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import pl.kontroler.carspendsmoney.R
 import pl.kontroler.carspendsmoney.databinding.FragmentRegisterBinding
+import pl.kontroler.carspendsmoney.utils.showToast
 
 class RegisterFragment : Fragment() {
 
@@ -50,8 +50,8 @@ class RegisterFragment : Fragment() {
     }
 
     private fun observeOnErrorResId() {
-        vm.errorResId.observe(viewLifecycleOwner, Observer { resId ->
-            Toast.makeText(requireContext(), getString(resId), Toast.LENGTH_SHORT).show()
+        vm.messageResource.observe(viewLifecycleOwner, Observer { messageResource ->
+           messageResource.showToast(requireContext())
         })
     }
 

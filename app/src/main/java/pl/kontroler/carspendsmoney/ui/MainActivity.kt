@@ -1,24 +1,33 @@
 package pl.kontroler.carspendsmoney.ui
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.MenuCompat
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.ui.*
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.consumeAsFlow
+import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.getViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import pl.kontroler.carspendsmoney.R
 import pl.kontroler.carspendsmoney.databinding.ActivityMainBinding
+import pl.kontroler.carspendsmoney.ui.editCar.EditCarDialogFragment
 import pl.kontroler.carspendsmoney.ui.login.LoginViewModel
 import pl.kontroler.domain.model.Car
-import pl.kontroler.firebase.util.Resource2
+import pl.kontroler.firebase.util.Resource
+import timber.log.Timber
+import java.lang.Exception
 
 @ExperimentalCoroutinesApi
 class MainActivity : AppCompatActivity() {
@@ -31,6 +40,8 @@ class MainActivity : AppCompatActivity() {
     private lateinit var navController: NavController
 
     private val carsMenuMap = HashMap<Int, Car>()
+
+    private val bottomNavigationViewVisibility = Channel<BottomNavigationViewVisibility>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -47,6 +58,7 @@ class MainActivity : AppCompatActivity() {
         setupActionBarWithNavController(navController, appBarConfiguration)
 
         observe()
+        collect()
     }
 
     override fun onSupportNavigateUp(): Boolean {
@@ -56,15 +68,30 @@ class MainActivity : AppCompatActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         val navController = findNavController(R.id.nav_host_fragment)
+        if (item.groupId == 1 && item.itemId == Menu.FIRST + carsMenuMap.size) {
+            val editCarFragment = EditCarDialogFragment.newInstance()
+            editCarFragment.show(supportFragmentManager, "dialog")
+        } else {
+            try {
+                val car = carsMenuMap[item.itemId]
+                vm.setCurrentCar(car!!)
+            } catch (e: Exception) {
+                Timber.e(e)
+            }
+        }
         return item.onNavDestinationSelected(navController) || super.onOptionsItemSelected(item)
     }
 
     fun hideBottomNavigationView() {
-        binding.bottomNav.visibility = View.GONE
+        GlobalScope.launch(Dispatchers.Main) {
+            bottomNavigationViewVisibility.send(BottomNavigationViewVisibility.GONE)
+        }
     }
 
     fun showBottomNavigationView() {
-        binding.bottomNav.visibility = View.VISIBLE
+        GlobalScope.launch(Dispatchers.Main) {
+            bottomNavigationViewVisibility.send(BottomNavigationViewVisibility.VISIBLE)
+        }
     }
 
     override fun onPrepareOptionsMenu(menu: Menu?): Boolean {
@@ -82,6 +109,7 @@ class MainActivity : AppCompatActivity() {
     private fun observe() {
         observeAuthenticationState()
         observeCars()
+        observeCurrentCar()
     }
 
     private fun observeAuthenticationState() {
@@ -95,8 +123,15 @@ class MainActivity : AppCompatActivity() {
 
     private fun observeCars() {
         vm.cars.observe(this, Observer {
-            if (it is Resource2.Success) {
+            if (it is Resource.Success) {
                 setCarsMenuMap(it.data)
+            }
+        })
+    }
+
+    private fun observeCurrentCar() {
+        vm.currentCar.observe(this, Observer {
+            if (it is Resource.Success) {
                 setCurrentCarName(it.data)
             }
         })
@@ -111,11 +146,25 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun setCurrentCarName(cars: List<Car>) {
-        val car = cars.find { it.isCurrent }
-        if (car != null) {
-            binding.carName.text = car.name
+    private fun setCurrentCarName(car: Car) {
+        binding.carName.text = car.name
+    }
+
+    private fun collect() {
+        GlobalScope.launch(Dispatchers.Main) {
+            bottomNavigationViewVisibility.consumeAsFlow().collect {
+                when (it) {
+                    BottomNavigationViewVisibility.VISIBLE ->
+                        binding.bottomNav.visibility = View.VISIBLE
+                    BottomNavigationViewVisibility.GONE ->
+                        binding.bottomNav.visibility = View.GONE
+                }
+            }
         }
+    }
+
+    private enum class BottomNavigationViewVisibility {
+        VISIBLE, GONE
     }
 
 }

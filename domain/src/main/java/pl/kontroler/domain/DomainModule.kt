@@ -27,7 +27,6 @@ class DomainModule : KoinComponent {
     val domainModule = module {
 
         single { AuthenticationDomainManager(get(), get()) }
-        single { RealtimeDatabaseDomainManager(get(), get()) }
         single { FuelExpenseDomainManager(get(), get()) }
         single { CurrencyDomainManager(get(), get()) }
         single { FuelTypeDomainManager(get()) }

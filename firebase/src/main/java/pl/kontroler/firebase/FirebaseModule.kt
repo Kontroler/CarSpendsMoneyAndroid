@@ -17,8 +17,7 @@ import pl.kontroler.firebase.manager.*
 val firebaseModule = module {
 
     single { AuthenticationFirebaseManager(get()) }
-    single { RealtimeDatabaseFirebaseManager(get(), get()) }
-    single { FuelExpenseFirebaseManager(get(), get(), get()) }
+    single { FuelExpenseFirebaseManager(get(), get()) }
     single { CurrencyFirebaseManager(get()) }
     single { FuelTypeFirebaseManager(get()) }
     single { CarFirebaseManager(get(), get()) }
