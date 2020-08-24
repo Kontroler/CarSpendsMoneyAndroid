@@ -40,12 +40,13 @@ ext {
     timber = "com.jakewharton.timber:timber:4.7.1"
 
 //    FastAdapter
-    fastAdapterVersion = '5.0.2'
+    fastAdapterVersion = '5.2.2'
     fastAdapter = "com.mikepenz:fastadapter:$fastAdapterVersion"
     fastAdapterExtensionsBinding = "com.mikepenz:fastadapter-extensions-binding:$fastAdapterVersion"
     fastAdapterExtensionsExpandable = "com.mikepenz:fastadapter-extensions-expandable:$fastAdapterVersion"
     fastAdapterExtensionsDiff = "com.mikepenz:fastadapter-extensions-diff:$fastAdapterVersion"
     fastAdapterExtensionsUi = "com.mikepenz:fastadapter-extensions-ui:$fastAdapterVersion"
+    fastAdapterExtensionsSwipe = "com.mikepenz:fastadapter-extensions-swipe:$fastAdapterVersion"
 
     itemAnimators = "com.mikepenz:itemanimators:1.1.0"
 
@@ -70,9 +71,9 @@ ext {
 
 //    Mockito
     // Optional -- Robolectric environment
-     androidXTestCore = 'androidx.test:core:1.0.0' // testImplementation
+    androidXTestCore = 'androidx.test:core:1.0.0' // testImplementation
     // Optional -- Mockito framework
-     mockitoCore = 'org.mockito:mockito-core:3.4.6' // testImplementation
+    mockitoCore = 'org.mockito:mockito-core:3.4.6' // testImplementation
 
     threetenabp = 'com.jakewharton.threetenabp:threetenabp:1.2.4'
     threetenabpTest = 'org.threeten:threetenbp:1.4.4'
@@ -83,4 +84,6 @@ ext {
     rxJavaRxKotlin = "io.reactivex.rxjava3:rxkotlin:3.0.0"
 
     toasty = 'com.github.GrenderG:Toasty:1.5.0'
+
+    mpAndroidChart = 'com.github.PhilJay:MPAndroidChart:v3.1.0'
 }

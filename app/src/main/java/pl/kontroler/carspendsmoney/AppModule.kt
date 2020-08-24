@@ -30,7 +30,7 @@ class AppModule : KoinComponent {
         viewModel { MainViewModel(get()) }
         viewModel { LoginViewModel(get()) }
         viewModel { RegisterViewModel(get()) }
-        viewModel { HomeViewModel(get()) }
+        viewModel { HomeViewModel(get(), get()) }
         viewModel { RefuelsViewModel(get(), get()) }
         viewModel { NewRefuelViewModel(get(), get(), get(), get()) }
         viewModel { EditCarDialogViewModel(get()) }

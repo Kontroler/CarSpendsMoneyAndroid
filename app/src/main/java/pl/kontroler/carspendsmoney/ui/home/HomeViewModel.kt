@@ -1,43 +1,58 @@
 package pl.kontroler.carspendsmoney.ui.home
 
-import androidx.lifecycle.ViewModel
+import androidx.lifecycle.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.collect
+import pl.kontroler.carspendsmoney.binding.ExpensePieChartData
+import pl.kontroler.domain.manager.CarDomainManager
 import pl.kontroler.domain.manager.FuelExpenseDomainManager
+import pl.kontroler.domain.model.QueryDirection
+import pl.kontroler.firebase.util.Resource
+import timber.log.Timber
+import java.lang.Exception
+import java.math.BigDecimal
 
+@ExperimentalCoroutinesApi
 class HomeViewModel(
+    private val carDomainManager: CarDomainManager,
     private val fuelExpenseDomainManger: FuelExpenseDomainManager
 ) : ViewModel() {
 
-//    val allFuelExpenses
-//        get() = liveData(Dispatchers.IO) {
-//            emit(Resource.Loading())
-//            try {
-//                val data = fuelExpenseDomainManger.readAll()
-//                emit(data)
-//            } catch (e: Exception) {
-//                Timber.e("ERROR: $e")
-//                emit(Resource.Failure(e))
-//            }
-//        }
-//
-//    fun write() {
-//        viewModelScope.launch {
-//            val expense = FuelExpense.create(
-//                date = DateValue.of(2020, 1, 1),
-//                description = "Fuel",
-//                quantity = BigDecimal("40.00"),
-//                unit = "L",
-//                unitPrice = BigDecimal("3.99"),
-//                currency = "PLN",
-//                totalPrice = BigDecimal("159.6"),
-//                counter = 1000,
-//                fuelType = "LPG"
-//            )
-//            try {
-//                fuelExpenseDomainManger.write(expense)
-//            } catch (e: Exception) {
-//                Timber.e("Error $e")
-//            }
-//        }
-//    }
+    val sumExpensePieChartData: LiveData<List<ExpensePieChartData>> = liveData(Dispatchers.IO) {
+        emit(Resource.Loading())
+        try {
+            carDomainManager
+                .currentCarFlow()
+                .collect { emit(it) }
+        } catch (e: Exception) {
+            Timber.e(e)
+            emit(Resource.Failure(e))
+        }
+    }.switchMap { currentCar ->
+        liveData(Dispatchers.IO) {
+            emit(Resource.Loading())
+            try {
+                if (currentCar is Resource.Success) {
+                    fuelExpenseDomainManger
+                        .allFlow(currentCar.data, QueryDirection.DESC)
+                        .collect { emit(it) }
+                }
+            } catch (e: Exception) {
+                Timber.e(e)
+                emit(Resource.Failure(e))
+            }
+        }
+    }.map {
+        val list = mutableListOf<ExpensePieChartData>()
+        if (it is Resource.Success) {
+            var sum = BigDecimal.ZERO
+            it.data.forEach { fuelExpense ->
+                sum = sum.add(fuelExpense.unitPrice.multiply(fuelExpense.quantity))
+            }
+            list.add(ExpensePieChartData(sum, it.data[0].currency, ExpensePieChartData.Type.Fuel))
+        }
+        list
+    }
 
 }

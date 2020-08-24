@@ -17,10 +17,15 @@
         android:layout_height="match_parent"
         tools:context=".ui.home.HomeFragment">
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="Hello" />
+        <com.github.mikephil.charting.charts.PieChart
+            android:id="@+id/sumPieChart"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:data="@{viewmodel.sumExpensePieChartData}"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

@@ -86,6 +86,7 @@ dependencies {
     implementation deps.fastAdapterExtensionsExpandable
     implementation deps.fastAdapterExtensionsDiff
     implementation deps.fastAdapterExtensionsUi
+    implementation deps.fastAdapterExtensionsSwipe
     implementation deps.itemAnimators
 
     implementation deps.firebaseAuthKtx
@@ -100,4 +101,5 @@ dependencies {
     implementation deps.rxJavaRxKotlin
 
     implementation deps.toasty
+    implementation deps.mpAndroidChart
 }
