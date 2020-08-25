@@ -5,9 +5,9 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.channels.awaitClose
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.callbackFlow
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.tasks.await
+import pl.kontroler.firebase.DeleteFuelExpenseException
 import pl.kontroler.firebase.NextFuelExpenseCounterIsLowerException
 import pl.kontroler.firebase.PreviousFuelExpenseCounterIsGreaterException
 import pl.kontroler.firebase.model.FuelExpenseFirebase
@@ -23,7 +23,7 @@ import timber.log.Timber
 @ExperimentalCoroutinesApi
 class FuelExpenseFirebaseManager(
     private val firestore: FirebaseFirestore,
-    private val auth: FirebaseAuth
+    private val auth: FirebaseAuth,
 ) {
 
     suspend fun write(fuelExpense: FuelExpenseFirebase, carUid: String) {
@@ -82,7 +82,7 @@ class FuelExpenseFirebaseManager(
 
     suspend fun allFlow(
         carUid: String,
-        queryDirection: Query.Direction
+        queryDirection: Query.Direction,
     ): Flow<Resource<List<IdValuePair<FuelExpenseFirebase>>>> {
         return callbackFlow {
             val document = firestore
@@ -113,6 +113,26 @@ class FuelExpenseFirebaseManager(
             }
             awaitClose { subscription.remove() }
         }
+    }
+
+    suspend fun delete(fuelExpenseUid: String, carUid: String): Resource<Unit> {
+        var result: Resource<Unit> = Resource.Failure(DeleteFuelExpenseException("Default value did not changed"))
+        firestore
+            .collection("users")
+            .document(auth.currentUser!!.uid)
+            .collection("car")
+            .document(carUid)
+            .collection("fuelExpense")
+            .document(fuelExpenseUid)
+            .delete()
+            .addOnSuccessListener {
+                result = Resource.Success(Unit)
+            }
+            .addOnFailureListener {
+                result = Resource.Failure(it)
+            }
+            .await()
+        return result
     }
 
 }

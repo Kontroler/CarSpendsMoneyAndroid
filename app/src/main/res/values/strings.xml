@@ -18,6 +18,10 @@
     <string name="login_signIn">Sign In</string>
     <string name="login_register">Register</string>
 
+    <string name="refuels_deleteRefuelError">Delete error</string>
+    <string name="refuels_deleteRefuelMissingCurrentError">Missing current car</string>
+    <string name="refuels_deleteRefuelSuccessful">Delete successful</string>
+
     <string name="newRefuel_date">Date</string>
     <string name="newRefuel_hintQuantity">Quantity</string>
     <string name="newRefuel_hintUnitPrice">Unit price</string>

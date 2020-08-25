@@ -5,6 +5,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import pl.kontroler.domain.mapper.CarMapper
 import pl.kontroler.domain.model.Car
+import pl.kontroler.domain.utils.MissingCarException
 import pl.kontroler.firebase.manager.CarFirebaseManager
 import pl.kontroler.firebase.model.CarFirebase
 import pl.kontroler.firebase.util.IdValuePair
@@ -25,11 +26,11 @@ class CarDomainManager(
         carFirebaseManager.write(mapper.mapToFirebase(car))
     }
 
-    suspend fun currentCar(): Car? {
-        val currentCarFirebase: IdValuePair<CarFirebase>? = carFirebaseManager.currentCar()
-            ?: return null
+    suspend fun currentCar(): Car {
+        val currentCarFirebase: IdValuePair<CarFirebase> = carFirebaseManager.currentCar()
+            ?: throw MissingCarException("Current car is null")
 
-        val carUid = currentCarFirebase!!.id
+        val carUid = currentCarFirebase.id
         val carFirebase = currentCarFirebase.value
 
         return mapper.mapToModel(carUid, carFirebase)

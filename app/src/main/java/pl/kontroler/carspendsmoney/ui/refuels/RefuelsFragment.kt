@@ -7,13 +7,13 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import pl.kontroler.carspendsmoney.R
 import pl.kontroler.carspendsmoney.databinding.FragmentRefuelsBinding
 import pl.kontroler.carspendsmoney.ui.MainActivity
+import pl.kontroler.carspendsmoney.utils.showToast
 import pl.kontroler.firebase.util.Resource
 
 @ExperimentalCoroutinesApi
@@ -28,7 +28,7 @@ class RefuelsFragment : Fragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View? {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_refuels, container, false)
         binding.viewmodel = vm
@@ -64,7 +64,7 @@ class RefuelsFragment : Fragment() {
     }
 
     private fun observeAllFuelExpenseList() {
-        vm.fuelExpenses.observe(viewLifecycleOwner, Observer {
+        vm.fuelExpenses.observe(viewLifecycleOwner, {
             when (it) {
                 is Resource.Loading -> binding.progressBar.visibility = View.VISIBLE
                 is Resource.Failure -> {
@@ -74,6 +74,12 @@ class RefuelsFragment : Fragment() {
                 }
                 else -> binding.progressBar.visibility = View.GONE
             }
+        })
+    }
+
+    private fun observeOnMessageResource() {
+        vm.messageResource.observe(viewLifecycleOwner, {
+            it.showToast(requireContext())
         })
     }
 
