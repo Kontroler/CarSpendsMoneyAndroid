@@ -1,7 +1,5 @@
 package pl.kontroler.firebase
 
-import java.lang.Exception
-
 
 /**
  * @author Rafał Nowowieski

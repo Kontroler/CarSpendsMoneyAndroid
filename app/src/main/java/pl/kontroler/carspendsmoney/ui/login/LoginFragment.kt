@@ -1,18 +1,15 @@
 package pl.kontroler.carspendsmoney.ui.login
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.addCallback
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
-import com.google.android.play.core.internal.v
-import org.koin.android.ext.android.bind
 import org.koin.androidx.viewmodel.ext.android.getViewModel
-import org.koin.androidx.viewmodel.ext.android.viewModel
 import pl.kontroler.carspendsmoney.R
 import pl.kontroler.carspendsmoney.databinding.FragmentLoginBinding
 import timber.log.Timber

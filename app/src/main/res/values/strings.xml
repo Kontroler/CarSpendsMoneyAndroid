@@ -39,6 +39,7 @@
     <string name="refuelFastAdapterItem_unitPriceExample">3.99 PLN/l</string>
     <string name="refuelFastAdapterItem_kmSinceLastRefuelingExample">150000 (+300) km</string>
     <string name="refuelFastAdapterItem_descriptionExample">Description</string>
+    <string name="refuelFastAdapterItem_deleteBtnContentDescription">Delete button</string>
 
     <string name="pieChart_noExpenses">No expenses</string>
     <string name="pieChart_amountsIn">Amounts in</string>

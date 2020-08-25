@@ -1,13 +1,16 @@
 package pl.kontroler.carspendsmoney.fastAdapterItem
 
 import android.annotation.SuppressLint
+import android.graphics.Color
 import android.view.View
-import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.mikepenz.fastadapter.items.AbstractItem
 import com.mikepenz.fastadapter.swipe.IDrawerSwipeableViewHolder
 import com.mikepenz.fastadapter.swipe.ISwipeable
-import com.mikepenz.fastadapter.swipe.SimpleSwipeDrawerCallback
+import com.mikepenz.iconics.IconicsDrawable
+import com.mikepenz.iconics.typeface.library.materialdesigniconic.MaterialDesignIconic
+import com.mikepenz.iconics.utils.colorInt
+import com.mikepenz.iconics.utils.sizeDp
 import kotlinx.android.synthetic.main.fast_adapter_item_refuel.view.*
 import pl.kontroler.carspendsmoney.R
 import pl.kontroler.domain.model.FuelExpense
@@ -68,6 +71,13 @@ class RefuelFastAdapterItem : AbstractItem<RefuelFastAdapterItem.ViewHolder>(), 
         } else {
             holder.description.text = fuelExpense.description
         }
+
+        holder.deleteBtn.setImageDrawable(
+            IconicsDrawable(holder.itemView.context, MaterialDesignIconic.Icon.gmi_delete).apply {
+                colorInt = Color.RED
+                sizeDp = 24
+            }
+        )
     }
 
     override fun unbindView(holder: ViewHolder) {
@@ -79,6 +89,7 @@ class RefuelFastAdapterItem : AbstractItem<RefuelFastAdapterItem.ViewHolder>(), 
         holder.unitPrice.text = null
         holder.kmSinceLastRefueling.text = null
         holder.description.text = null
+        holder.deleteBtn.setImageDrawable(null)
     }
 
     private fun getKmSinceLastRefueling(): String {
@@ -101,6 +112,7 @@ class RefuelFastAdapterItem : AbstractItem<RefuelFastAdapterItem.ViewHolder>(), 
         var unitPrice = view.unitPrice
         var kmSinceLastRefueling = view.kmSinceLastRefueling
         var description = view.description
+        var deleteBtn = view.delete
 
         override val swipeableView: View
             get() = itemContent

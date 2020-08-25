@@ -1,6 +1,8 @@
 package pl.kontroler.carspendsmoney.ui.refuels
 
-import androidx.lifecycle.*
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.liveData
+import androidx.lifecycle.switchMap
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.collect
@@ -9,7 +11,6 @@ import pl.kontroler.domain.manager.FuelExpenseDomainManager
 import pl.kontroler.domain.model.QueryDirection
 import pl.kontroler.firebase.util.Resource
 import timber.log.Timber
-import java.lang.Exception
 
 @ExperimentalCoroutinesApi
 class RefuelsViewModel(

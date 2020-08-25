@@ -6,7 +6,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.mikepenz.fastadapter.FastAdapter
 import com.mikepenz.fastadapter.adapters.ItemAdapter
-import com.mikepenz.fastadapter.swipe.ISwipeable
 import com.mikepenz.fastadapter.swipe.SimpleSwipeDrawerCallback
 import com.mikepenz.itemanimators.SlideDownAlphaAnimator
 import pl.kontroler.carspendsmoney.fastAdapterItem.RefuelFastAdapterItem

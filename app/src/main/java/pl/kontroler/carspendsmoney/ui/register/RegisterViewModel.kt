@@ -12,7 +12,6 @@ import pl.kontroler.carspendsmoney.utils.SingleLiveEvent
 import pl.kontroler.domain.manager.AuthenticationDomainManager
 import pl.kontroler.domain.model.MessageResource
 import pl.kontroler.domain.model.User
-import java.lang.Exception
 
 class RegisterViewModel(
     private val authenticationDomainManager: AuthenticationDomainManager
