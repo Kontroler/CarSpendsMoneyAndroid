@@ -3,7 +3,6 @@ package pl.kontroler.domain.mapper
 import com.google.firebase.auth.FirebaseUser
 import org.hamcrest.CoreMatchers.`is`
 import org.hamcrest.MatcherAssert.assertThat
-import org.junit.Assert
 import org.junit.Rule
 import org.junit.Test
 import org.junit.rules.ExpectedException

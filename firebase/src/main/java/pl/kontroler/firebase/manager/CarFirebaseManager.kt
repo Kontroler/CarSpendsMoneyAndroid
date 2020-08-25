@@ -56,7 +56,7 @@ class CarFirebaseManager(
                         }
                     }
                 } catch (e: Exception) {
-                    offer(Resource.Failure(e))
+                    offer(Resource.Failure(e)) as Unit
                 }
             }
 
@@ -81,7 +81,7 @@ class CarFirebaseManager(
                     }
                     offer(Resource.Success(returnedCars))
                 } catch (e: Exception) {
-                    offer(Resource.Failure(e))
+                    offer(Resource.Failure(e)) as Unit
                 }
             }
 
@@ -124,7 +124,7 @@ class CarFirebaseManager(
             .collection("car")
             .get()
             .addOnSuccessListener {
-                it.documents.forEach {document ->
+                it.documents.forEach { document ->
                     if (document.id == uid) {
                         document.reference.update("current", true)
                     } else {

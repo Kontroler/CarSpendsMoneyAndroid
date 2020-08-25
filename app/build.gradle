@@ -88,6 +88,9 @@ dependencies {
     implementation deps.fastAdapterExtensionsUi
     implementation deps.fastAdapterExtensionsSwipe
     implementation deps.itemAnimators
+    implementation deps.iconicsCore
+    implementation deps.materialDesignIconicTypeface
+    implementation deps.iconicsViews
 
     implementation deps.firebaseAuthKtx
 

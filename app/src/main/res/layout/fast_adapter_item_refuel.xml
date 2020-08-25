@@ -12,14 +12,17 @@
         android:layout_gravity="end"
         tools:visibility="gone">
 
-        <com.google.android.material.button.MaterialButton
+        <ImageButton
             android:id="@+id/delete"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="delete"
+            android:layout_marginEnd="8dp"
+            android:background="@null"
+            android:contentDescription="@string/refuelFastAdapterItem_deleteBtnContentDescription"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -29,7 +32,8 @@
         android:layout_marginTop="4dp"
         android:layout_marginBottom="4dp"
         android:background="@color/lightGray"
-        android:padding="8dp">
+        android:padding="8dp"
+        tools:visibility="visible">
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/fuelType"

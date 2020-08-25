@@ -1,14 +1,12 @@
 package pl.kontroler.firebase.manager
 
 import androidx.lifecycle.LiveData
-import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.UserProfileChangeRequest
 import kotlinx.coroutines.tasks.await
 import pl.kontroler.firebase.model.FirebaseUserLiveData
 import timber.log.Timber
-import java.lang.Exception
 
 
 /**

@@ -27,7 +27,6 @@ import pl.kontroler.carspendsmoney.ui.login.LoginViewModel
 import pl.kontroler.domain.model.Car
 import pl.kontroler.firebase.util.Resource
 import timber.log.Timber
-import java.lang.Exception
 
 @ExperimentalCoroutinesApi
 class MainActivity : AppCompatActivity() {

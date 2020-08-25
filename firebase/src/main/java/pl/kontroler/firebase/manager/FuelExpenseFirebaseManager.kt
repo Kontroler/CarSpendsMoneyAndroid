@@ -80,7 +80,10 @@ class FuelExpenseFirebaseManager(
             .await()
     }
 
-    suspend fun allFlow(carUid: String, queryDirection: Query.Direction): Flow<Resource<List<IdValuePair<FuelExpenseFirebase>>>> {
+    suspend fun allFlow(
+        carUid: String,
+        queryDirection: Query.Direction
+    ): Flow<Resource<List<IdValuePair<FuelExpenseFirebase>>>> {
         return callbackFlow {
             val document = firestore
                 .collection("users")
@@ -92,8 +95,8 @@ class FuelExpenseFirebaseManager(
                 .orderBy("counter", queryDirection)
 
             val subscription = document.addSnapshotListener { value, error ->
-                val returnedList = mutableListOf<IdValuePair<FuelExpenseFirebase>>()
                 try {
+                    val returnedList = mutableListOf<IdValuePair<FuelExpenseFirebase>>()
                     value?.forEach {
                         if (it.exists()) {
                             val id = it.id
@@ -105,11 +108,11 @@ class FuelExpenseFirebaseManager(
                     }
                     offer(Resource.Success(returnedList))
                 } catch (e: Exception) {
-                    offer(Resource.Failure(e))
+                    offer(Resource.Failure(e)) as Unit
                 }
             }
             awaitClose { subscription.remove() }
         }
     }
-    
+
 }

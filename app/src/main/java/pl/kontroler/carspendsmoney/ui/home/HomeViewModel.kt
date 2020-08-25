@@ -10,7 +10,6 @@ import pl.kontroler.domain.manager.FuelExpenseDomainManager
 import pl.kontroler.domain.model.QueryDirection
 import pl.kontroler.firebase.util.Resource
 import timber.log.Timber
-import java.lang.Exception
 import java.math.BigDecimal
 
 @ExperimentalCoroutinesApi

@@ -1,6 +1,5 @@
 package pl.kontroler.domain.mapper
 
-import com.google.firebase.Timestamp
 import org.hamcrest.CoreMatchers.`is`
 import org.hamcrest.MatcherAssert.assertThat
 import org.junit.Rule
