@@ -56,7 +56,7 @@
                     android:id="@+id/quantityInputEditText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="number"
+                    android:inputType="numberDecimal"
                     android:text="@={viewmodel.quantity}" />
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -87,7 +87,7 @@
                     android:id="@+id/unitPriceInputEditText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="number"
+                    android:inputType="numberDecimal"
                     android:text="@={viewmodel.unitPrice}" />
             </com.google.android.material.textfield.TextInputLayout>
 
