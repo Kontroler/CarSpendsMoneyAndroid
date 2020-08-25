@@ -7,7 +7,7 @@ package pl.kontroler.domain.model
 
 data class MessageResource(
     val type: Type,
-    val resId: Int
+    val resId: Int,
 ) {
 
     enum class Type {

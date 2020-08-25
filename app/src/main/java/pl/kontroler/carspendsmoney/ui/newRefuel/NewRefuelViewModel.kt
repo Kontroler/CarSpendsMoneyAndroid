@@ -77,7 +77,7 @@ class NewRefuelViewModel(
                 val fuelExpense = getFuelExpense()
                 val car = carDomainManager.currentCar()
 
-                fuelExpenseDomainManger.write(fuelExpense, car!!)
+                fuelExpenseDomainManger.write(fuelExpense, car)
                 _messageResource.value = MessageResource(
                     MessageResource.Type.Success,
                     R.string.newRefuel_saveSuccessful

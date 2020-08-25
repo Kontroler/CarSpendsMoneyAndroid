@@ -11,6 +11,7 @@ import com.mikepenz.iconics.IconicsDrawable
 import com.mikepenz.iconics.typeface.library.materialdesigniconic.MaterialDesignIconic
 import com.mikepenz.iconics.utils.colorInt
 import com.mikepenz.iconics.utils.sizeDp
+import io.reactivex.rxjava3.functions.Consumer
 import kotlinx.android.synthetic.main.fast_adapter_item_refuel.view.*
 import pl.kontroler.carspendsmoney.R
 import pl.kontroler.domain.model.FuelExpense
@@ -25,6 +26,8 @@ class RefuelFastAdapterItem : AbstractItem<RefuelFastAdapterItem.ViewHolder>(), 
     private lateinit var fuelExpense: FuelExpense
     private lateinit var previousFuelExpense: FuelExpense
 
+    var deleteAction: Consumer<FuelExpense>? = null
+
     fun withFuelExpense(fuelFuelExpense: FuelExpense): RefuelFastAdapterItem {
         this.fuelExpense = fuelFuelExpense
         return this
@@ -37,24 +40,6 @@ class RefuelFastAdapterItem : AbstractItem<RefuelFastAdapterItem.ViewHolder>(), 
 
     override val type: Int
         get() = R.id.fastadapter_item_refuel_id
-
-
-//    @SuppressLint("SetTextI18n")
-//    override fun bindView(binding: FastAdapterItemRefuelBinding, payloads: List<Any>) {
-//        super.bindView(binding, payloads)
-//        binding.fuelType.text = fuelExpense.fuelType.code
-//        binding.date.text = fuelExpense.date.toString()
-//        binding.totalPrice.text = fuelExpense.totalPrice.toString()
-//        binding.quantity.text = "${fuelExpense.quantity}${fuelExpense.unit}"
-//        binding.unitPrice.text =
-//            "${fuelExpense.unitPrice} ${fuelExpense.currency}/${fuelExpense.unit}"
-//        binding.kmSinceLastRefueling.text = getKmSinceLastRefueling()
-//        if (fuelExpense.description.isBlank()) {
-//            binding.description.visibility = View.GONE
-//        } else {
-//            binding.description.text = fuelExpense.description
-//        }
-//    }
 
     @SuppressLint("SetTextI18n")
     override fun bindView(holder: ViewHolder, payloads: List<Any>) {
@@ -78,6 +63,8 @@ class RefuelFastAdapterItem : AbstractItem<RefuelFastAdapterItem.ViewHolder>(), 
                 sizeDp = 24
             }
         )
+
+        holder.deleteActionRunnable = Runnable { deleteAction?.accept(fuelExpense) }
     }
 
     override fun unbindView(holder: ViewHolder) {
@@ -114,8 +101,14 @@ class RefuelFastAdapterItem : AbstractItem<RefuelFastAdapterItem.ViewHolder>(), 
         var description = view.description
         var deleteBtn = view.delete
 
+        var deleteActionRunnable: Runnable? = null
+
         override val swipeableView: View
             get() = itemContent
+
+        init {
+            deleteBtn.setOnClickListener { deleteActionRunnable?.run() }
+        }
     }
 
     override val layoutRes: Int

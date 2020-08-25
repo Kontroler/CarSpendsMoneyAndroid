@@ -51,4 +51,8 @@ class FuelExpenseDomainManager(
             }
     }
 
+    suspend fun delete(fuelExpense: FuelExpense, car: Car): Resource<Unit> {
+        return database.delete(fuelExpense.uid!!, car.uid)
+    }
+
 }
