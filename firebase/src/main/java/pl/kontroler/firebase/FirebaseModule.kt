@@ -21,6 +21,7 @@ val firebaseModule = module {
     single { CurrencyFirebaseManager(get()) }
     single { FuelTypeFirebaseManager(get()) }
     single { CarFirebaseManager(get(), get()) }
+    single { ServiceExpenseFirebaseManager(get(), get()) }
 
     single { Firebase.auth }
     single { FirebaseDatabase.getInstance().reference }
