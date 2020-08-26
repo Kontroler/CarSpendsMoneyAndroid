@@ -83,7 +83,7 @@ object PieChartBindings {
 
         values?.forEach {
             if (valuesSum > BigDecimal.ZERO) {
-                val entry = PieEntry(it.value.toFloat(), it.type)
+                val entry = PieEntry(it.value.toFloat(), it.type.toString())
                 entries.add(entry)
             }
         }

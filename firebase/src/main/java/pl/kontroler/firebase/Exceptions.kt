@@ -8,4 +8,9 @@ package pl.kontroler.firebase
 class PreviousFuelExpenseCounterIsGreaterException(msg: String) : Exception(msg)
 class NextFuelExpenseCounterIsLowerException(msg: String) : Exception(msg)
 
+class PreviousServiceExpenseCounterIsGreaterException(msg: String) : Exception(msg)
+class NextServiceExpenseCounterIsLowerException(msg: String) : Exception(msg)
+
+class WriteServiceExpenseException(msg: String) : Exception(msg)
+
 class DeleteFuelExpenseException(msg: String) : Exception(msg)
