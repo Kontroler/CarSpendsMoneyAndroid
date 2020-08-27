@@ -19,7 +19,7 @@ import pl.kontroler.firebase.util.Resource
 @ExperimentalCoroutinesApi
 class FuelExpenseDomainManager(
     private val database: FuelExpenseFirebaseManager,
-    private val fuelExpenseMapper: FuelExpenseMapper
+    private val fuelExpenseMapper: FuelExpenseMapper,
 ) {
 
     suspend fun write(fuelExpense: FuelExpense, car: Car) {
@@ -29,7 +29,7 @@ class FuelExpenseDomainManager(
 
     suspend fun allFlow(
         car: Car,
-        queryDirection: QueryDirection
+        queryDirection: QueryDirection,
     ): Flow<Resource<List<FuelExpense>>> {
         val direction = if (queryDirection == QueryDirection.ASC) {
             Query.Direction.ASCENDING
