@@ -1,16 +1,23 @@
 package pl.kontroler.carspendsmoney.ui
 
+import android.graphics.Color
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.MenuCompat
+import androidx.core.view.forEach
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.ui.*
+import com.mikepenz.iconics.IconicsDrawable
+import com.mikepenz.iconics.typeface.IIcon
+import com.mikepenz.iconics.typeface.library.materialdesigniconic.MaterialDesignIconic
+import com.mikepenz.iconics.utils.colorInt
+import com.mikepenz.iconics.utils.sizeDp
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.GlobalScope
@@ -52,12 +59,48 @@ class MainActivity : AppCompatActivity() {
         setSupportActionBar(toolbar)
 
         navController = findNavController(R.id.nav_host_fragment)
+
         binding.bottomNav.setupWithNavController(navController)
+        configureBottomMenuItems()
+
         appBarConfiguration = AppBarConfiguration(navController.graph)
         setupActionBarWithNavController(navController, appBarConfiguration)
 
         observe()
         collect()
+    }
+
+    private fun configureBottomMenuItems() {
+        binding.bottomNav.menu.forEach { menuItem ->
+            when (menuItem.itemId) {
+                R.id.home_fragment -> {
+                    configureBottomMenuItem(
+                        menuItem,
+                        MaterialDesignIconic.Icon.gmi_home
+                    )
+                }
+                R.id.refuels_fragment -> {
+                    configureBottomMenuItem(
+                        menuItem,
+                        MaterialDesignIconic.Icon.gmi_gas_station
+                    )
+                }
+                R.id.services_fragment -> {
+                    configureBottomMenuItem(
+                        menuItem,
+                        MaterialDesignIconic.Icon.gmi_car
+                    )
+                }
+            }
+        }
+    }
+
+    private fun configureBottomMenuItem(menuItem: MenuItem, icon: IIcon) {
+        menuItem.icon = IconicsDrawable(this, icon)
+            .apply {
+                colorInt = Color.RED
+                sizeDp = 24
+            }
     }
 
     override fun onSupportNavigateUp(): Boolean {

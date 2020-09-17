@@ -91,7 +91,7 @@ class RefuelFastAdapterItem : AbstractItem<RefuelFastAdapterItem.ViewHolder>(), 
     }
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view), IDrawerSwipeableViewHolder {
-        var itemContent = view.fastAdapterItem_refuel
+        var itemContent = view.fastAdapterItem_service
         var fuelType = view.fuelType
         var date = view.date
         var totalPrice = view.totalPrice

@@ -36,34 +36,21 @@
         tools:visibility="visible">
 
         <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/fuelType"
-            android:layout_width="50dp"
-            android:layout_height="0dp"
-            android:gravity="center"
-            android:text="@string/refuelFastAdapterItem_fuelTypeExample"
-            android:textSize="20sp"
+            android:id="@+id/date"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="2010-01-01"
+            android:textSize="16sp"
             android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/date"
+            android:id="@+id/name"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="@string/refuelFastAdapterItem_dateExample"
-            android:textSize="16sp"
-            android:textStyle="bold"
-            app:layout_constraintEnd_toStartOf="@id/totalPrice"
-            app:layout_constraintStart_toEndOf="@id/fuelType"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/totalPrice"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:gravity="end"
-            android:text="@string/refuelFastAdapterItem_totalPriceExample"
+            android:layout_marginStart="8dp"
+            android:text="name"
             android:textSize="16sp"
             android:textStyle="bold"
             app:layout_constraintBaseline_toBaselineOf="@id/date"
@@ -71,38 +58,34 @@
             app:layout_constraintStart_toEndOf="@id/date" />
 
         <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/quantity"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/refuelFastAdapterItem_quantityExample"
-            app:layout_constraintEnd_toStartOf="@id/unitPrice"
-            app:layout_constraintStart_toEndOf="@id/fuelType"
-            app:layout_constraintTop_toBottomOf="@id/date" />
-
-        <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/unitPrice"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:text="@string/refuelFastAdapterItem_unitPriceExample"
-            app:layout_constraintBaseline_toBaselineOf="@id/quantity"
-            app:layout_constraintStart_toEndOf="@id/quantity" />
-
-        <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/kmSinceLastRefueling"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/refuelFastAdapterItem_kmSinceLastRefuelingExample"
-            app:layout_constraintBaseline_toBaselineOf="@id/unitPrice"
-            app:layout_constraintEnd_toEndOf="parent" />
-
-        <com.google.android.material.textview.MaterialTextView
             android:id="@+id/description"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="@string/refuelFastAdapterItem_descriptionExample"
-            app:layout_constraintStart_toEndOf="@id/fuelType"
-            app:layout_constraintTop_toBottomOf="@id/quantity" />
+            android:text="Description"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/date" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/counter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="12000 km"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/description" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/totalPrice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="120.23 zł"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintBaseline_toBaselineOf="@id/counter"
+            app:layout_constraintEnd_toEndOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </FrameLayout>

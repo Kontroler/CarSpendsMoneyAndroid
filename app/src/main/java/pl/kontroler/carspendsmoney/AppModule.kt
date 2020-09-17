@@ -12,6 +12,7 @@ import pl.kontroler.carspendsmoney.ui.login.LoginViewModel
 import pl.kontroler.carspendsmoney.ui.newRefuel.NewRefuelViewModel
 import pl.kontroler.carspendsmoney.ui.refuels.RefuelsViewModel
 import pl.kontroler.carspendsmoney.ui.register.RegisterViewModel
+import pl.kontroler.carspendsmoney.ui.services.ServicesViewModel
 import pl.kontroler.domain.DomainModule
 
 
@@ -34,6 +35,7 @@ class AppModule : KoinComponent {
         viewModel { RefuelsViewModel(get(), get()) }
         viewModel { NewRefuelViewModel(get(), get(), get(), get()) }
         viewModel { EditCarDialogViewModel(get()) }
+        viewModel { ServicesViewModel(get(), get()) }
     }
 
 }

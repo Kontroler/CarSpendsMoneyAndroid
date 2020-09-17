@@ -11,4 +11,9 @@
         android:icon="@android:drawable/btn_radio"
         android:title="Refuels" />
 
+    <item
+        android:id="@id/services_fragment"
+        android:icon="@android:drawable/btn_radio"
+        android:title="Services" />
+
 </menu>

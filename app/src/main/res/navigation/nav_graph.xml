@@ -63,4 +63,12 @@
 
     </fragment>
 
+    <fragment
+        android:id="@+id/services_fragment"
+        android:name="pl.kontroler.carspendsmoney.ui.services.ServicesFragment"
+        android:label="Services"
+        tools:layout="@layout/fragment_services">
+
+    </fragment>
+
 </navigation>
